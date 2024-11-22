@@ -1,57 +1,37 @@
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javax.swing.*;
+import java.awt.*;
 
-public class Dashboard extends Application {
-
-    @Override
-    public void start(Stage primaryStage) {
-        Label titleLabel = new Label("Sample Dashboard");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-        PieChart pieChart = createPieChart();
-        Button updateButton = new Button("Update Data");
-        updateButton.setStyle("-fx-font-size: 14px;");
-        updateButton.setOnAction(e -> {
-            updateChart(pieChart);
-        });
-
-        
-        VBox vbox = new VBox(20, titleLabel, pieChart, updateButton);
-        vbox.setStyle("-fx-padding: 20px; -fx-alignment: center;");
-
-        // Setup the Scene and Stage
-        Scene scene = new Scene(vbox, 500, 400);
-        primaryStage.setTitle("Dashboard Example");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    
-    private PieChart createPieChart() {
-        PieChart.Data slice1 = new PieChart.Data("Category A", 30);
-        PieChart.Data slice2 = new PieChart.Data("Category B", 50);
-        PieChart.Data slice3 = new PieChart.Data("Category C", 20);
-
-        PieChart pieChart = new PieChart();
-        pieChart.getData().addAll(slice1, slice2, slice3);
-        pieChart.setTitle("Sample Data Distribution");
-        return pieChart;
-    }
-
-    
-    private void updateChart(PieChart pieChart) {
-        pieChart.getData().clear(); // Clear existing data
-        PieChart.Data slice1 = new PieChart.Data("Category A", 40);
-        PieChart.Data slice2 = new PieChart.Data("Category B", 40);
-        PieChart.Data slice3 = new PieChart.Data("Category C", 20);
-        pieChart.getData().addAll(slice1, slice2, slice3);
-    }
+public class Dashboard {
 
     public static void main(String[] args) {
-        launch(args);
+        // Creating the frame for the dashboard
+        JFrame frame = new JFrame("Simple Dashboard");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        
+        // Creating the main panel
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        // Adding title label
+        JLabel titleLabel = new JLabel("Simple Dashboard", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        panel.add(titleLabel);
+
+        // Adding a button to update data (example action)
+        JButton updateButton = new JButton("Update Data");
+        updateButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(frame, "Data Updated!");
+        });
+        panel.add(updateButton);
+
+        // Adding a label for showing some static information
+        JLabel infoLabel = new JLabel("Some info: Sample Data");
+        infoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        panel.add(infoLabel);
+
+        // Adding panel to the frame
+        frame.add(panel);
+        frame.setVisible(true);
     }
 }
